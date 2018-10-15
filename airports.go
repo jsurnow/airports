@@ -1,7 +1,9 @@
 package airports
 
 import (
+	"database/sql"
 	"encoding/csv"
+	_ "github.com/lib/pq"
 	"io/ioutil"
 	"log"
 	"strings"
@@ -33,6 +35,32 @@ func Load(file string) {
 	}
 }
 
-func Get(iata string) Airport  {
+func LoadDB() {
+	db, err := sql.Open("postgres", "user=postgres password=postgres sslmode=disable")
+	if (err != nil) {
+		log.Fatal(err)
+	}
+	rows, err := db.Query("SELECT iata, name FROM airport")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var iata string
+		var name string
+		if err := rows.Scan(&iata, &name); err != nil {
+			log.Fatal(err)
+		}
+		airport := new(Airport)
+		airport.IATA = iata
+		airport.Name = name
+		airports[airport.IATA] = *airport
+	}
+	if err := rows.Err(); err != nil {
+		log.Fatal(err)
+	}
+}
+
+func Get(iata string) Airport {
 	return airports[iata]
 }

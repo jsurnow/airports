@@ -13,3 +13,15 @@ func TestLoad(t *testing.T) {
 		t.Error("BADIATA found!")
 	}
 }
+
+func TestLoadDB(t *testing.T) {
+	LoadDB()
+	airport := Get("LAX")
+	if airport.IATA != "LAX" {
+		t.Error("LAX not found!")
+	}
+	airport = Get("BADIATA")
+	if airport.IATA != "" {
+		t.Error("BADIATA found!")
+	}
+}
