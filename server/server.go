@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	airports.Load()
+	airports.Load("airports.csv")
 	//airports.LoadDB()
 	router := gin.Default()
 
