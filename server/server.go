@@ -7,7 +7,8 @@ import (
 )
 
 func main() {
-	airports.LoadDB()
+	airports.Load()
+	//airports.LoadDB()
 	router := gin.Default()
 
 	router.GET("/airport/:iata", func(c *gin.Context) {
