@@ -36,7 +36,7 @@ func Load(file string) {
 }
 
 func LoadDB() {
-	db, err := sql.Open("postgres", "user=postgres password=postgres sslmode=disable host=host.docker.interal")
+	db, err := sql.Open("postgres", "user=postgres password=postgres sslmode=disable host=host.docker.internal")
 	if (err != nil) {
 		log.Fatal(err)
 	}
